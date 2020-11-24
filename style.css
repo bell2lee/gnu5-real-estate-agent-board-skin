@@ -159,8 +159,10 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .more_opt li i {float:right;line-height:20px}
 
 .td_num strong {color:#000}
-.bo_cate_link {float:left;display:inline-block;margin-right:10px;background:#e2eaf6;color:#3a8afd;font-weight:normal !important;height:20px;line-height:10px;padding:5px 8px;border-radius:5px;font-size:0.95em} /* 글제목줄 분류스타일 */
+.bo_cate_link {float:left;display:inline-block;margin-right:10px;background:#e2eaf6;color:#3a8afd;font-weight:bold !important;height:20px;line-height:10px;padding:5px 8px;border-radius:5px;font-size:0.95em} /* 글제목줄 분류스타일 */
 .bo_cate_link:hover {text-decoration:none}
+.bo_cate_link.green {background: #e0ffde; color:black;}
+
 .bo_tit {display:block;color:#000;font-weight:bold}
 .bo_current {color:#e8180c}
 #bo_list .profile_img img {border-radius:50%}

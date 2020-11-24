@@ -32,7 +32,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $querystring = http_build_query($output);
                 $current_url = $bbs_url . '&' . $querystring;
                 echo str_replace($bbs_url, $current_url, $category_option);
-//            echo $category_option;
             ?>
         </ul>
     </nav>
@@ -154,7 +153,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <td class="td_num2">
             <?php
             if ($list[$i]['is_notice']) // 공지사항
-                echo '<strong class="notice_icon">공지</strong>';
+                echo '<strong class="notice_icon">MD 추천매물</strong>';
             else if ($wr_id == $list[$i]['wr_id'])
                 echo "<span class=\"bo_current\">열람중</span>";
             else
@@ -166,7 +165,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <?php
                 if ($is_category && $list[$i]['ca_name']) {
 				?>
-                <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
+                    <span class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></span>
+                    <span class="bo_cate_link green"><?php echo $list[$i]['wr_1'] ?></span>
                 <?php } ?>
                 <div class="bo_tit">
                     <a href="<?php echo $list[$i]['href'] ?>">
