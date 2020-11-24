@@ -40,18 +40,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
         foreach ($kinds as $kind)
         {
-            echo '<select class="select_widget">';
+            echo '<select class="select_widget" onchange="changeKind(this.value)">';
             foreach ($kind as $category)
             {
-                echo '<option>' . $category . '</option>';
+
+                echo '<option ' .
+                    ($kind[0] == $category ? 'selected disabled' :
+                        ($category == $_GET['stx'] ? 'selected' : '')
+                    )
+                    . '>' . $category . '</option>';
             }
             echo '</select>';
         }
     }
-    print_r($sfl);
+    print_r($_GET['stx']);
 
     ?>
-    http://127.0.0.1:8081/bbs/board.php?bo_table=real_estate&sca=&sop=and&sfl=wr_1&stx=%EB%A7%A4%EB%A7%A4
+
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -302,6 +307,16 @@ function select_copy(sw) {
     f.submit();
 }
 
+function changeKind(kind){
+    const bbs_url = 'board.php?';
+    const [url, queryString] = window.location.href.split(bbs_url);
+    const params = new URLSearchParams(queryString)
+    params.set('sop', 'and');
+    params.set('sfl', 'wr_1');
+    params.set('stx', kind);
+    location.href = url + bbs_url + params.toString();
+}
+
 // 게시판 리스트 관리자 옵션
 jQuery(function($){
     $(".btn_more_opt.is_list_btn").on("click", function(e) {
@@ -316,4 +331,5 @@ jQuery(function($){
 });
 </script>
 <?php } ?>
+
 <!-- } 게시판 목록 끝 -->
