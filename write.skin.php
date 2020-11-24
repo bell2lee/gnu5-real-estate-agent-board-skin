@@ -21,7 +21,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
-    <?php
+
+        <?php
     $option = '';
     $option_hidden = '';
     if ($is_notice || $is_html || $is_secret || $is_mail) { 
@@ -93,7 +94,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php } ?>
 
     <div class="bo_w_tit write_div">
-        <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
+        <label for="wr_subject" class="sound_only">매물 제목<strong>필수</strong></label>
         
         <div id="autosave_wrapper" class="write_div">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
@@ -108,10 +109,40 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </div>
             <?php } ?>
         </div>
-        
     </div>
 
-    <div class="write_div">
+        <div class="extend_fields">
+            <!--카카오맵-->
+            <input type="text" required class="frm_input full_input required" name="wr_1" id="sample5_address" placeholder="주소">
+            <input type="button" class="btn_submit btn" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+            <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+            <input type="text" class="frm_input full_input required" required name="wr_2" placeholder="판매 정보 (권리금, 보증, 월세 혹은 매매 시 매매가 구분해서 입력)">
+
+            <input type="text" class="frm_input" name="wr_3" placeholder="평형 제곱미터 단위 입력">
+            <input type="text" class="frm_input" name="wr_4" placeholder="주차 가능 대수">
+            <input type="text" class="frm_input" name="wr_5" placeholder="준공년도">
+            <input type="text" class="frm_input" name="wr_6" placeholder="입주 예정일">
+            <input type="text" class="frm_input" name="wr_7" placeholder="층수 ex 4/14층">
+
+            <input type="hidden" id="room_options" class="frm_input" name="wr_8" placeholder="옵션">
+            <div id="room_option_check_fields">
+                <?php
+                $options = [ '냉방', '에어컨', '난방', '도시가스', '스팀', 'LPG', '방송', '일반TV', '위성TV', '케이블TV', '인터넷TV',
+                    '인터넷', 'ADSL', '광랜', '전용선', '가구', '붙박이장', '식탁', '침대', '책장', '소파', '옷장', '신발장', '가전',
+                    '전자레인지', '세탁기', '비디오', '냉장고', '탈수기', '주방욕실', '식기세척기', '가스렌지', '싱크대', '샤워부스', '비데',
+                    '보안', '자체경비원', '시설경비원', '비디오폰', '인터폰', '카드키', 'CCTV', '주변시설', '스포츠센터', '할인마트',
+                    '백화점', '공원', '병원', '기타', '엘리베이터', '화재경보기', '환기시설', '베란다'];
+
+                foreach ($options as $item) {
+                    echo '<label class="option_check"><input type="checkbox" value="' . $item . '" onclick="add_option()"> ' . $item . '</label>';
+                }
+                ?>
+
+            </div>
+        </div>
+
+
+        <div class="write_div">
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
         <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
             <?php if($write_min || $write_max) { ?>
@@ -250,6 +281,71 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
         return true;
     }
+
+    var ro = document.querySelectorAll('#room_option_check_fields input');
+    var hiddenROField = document.querySelector('#room_options');
+
+    function add_option(){
+        hiddenROField.value = '';
+        for (let i = 0; i < ro.length; i++)
+            if (ro[i].checked)
+                hiddenROField.value += ro[i].value + '|';
+
+        hiddenROField.value = hiddenROField.value.slice(0, -1);
+    }
     </script>
 </section>
+
+
+
+
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=&libraries=services"></script>
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+
+
+    function sample5_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.address; // 최종 주소 변수
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("sample5_address").value = addr;
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+            }
+        }).open();
+    }
+</script>
 <!-- } 게시물 작성/수정 끝 -->

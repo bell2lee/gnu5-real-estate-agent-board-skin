@@ -321,9 +321,9 @@ function select_copy(sw) {
 }
 
 function changeKind(kind){
-    const bbs_url = 'board.php?';
-    const [url, queryString] = window.location.href.split(bbs_url);
-    const params = new URLSearchParams(queryString)
+    var bbs_url = 'board.php?';
+    var [url, queryString] = window.location.href.split(bbs_url);
+    var params = new URLSearchParams(queryString)
     params.set('sop', 'and');
     params.set('sfl', 'wr_1');
     params.set('stx', kind);
