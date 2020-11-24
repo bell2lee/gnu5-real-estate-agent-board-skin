@@ -20,7 +20,20 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <nav id="bo_cate">
         <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
         <ul id="bo_cate_ul">
-            <?php echo $category_option ?>
+            <?php
+                $url = G5_DOMAIN . $_SERVER['REQUEST_URI'];
+                $bbs_url = explode('&', $url)[0];
+                parse_str(parse_url($url)['query'], $output);
+
+                $unset_items = ['sca', 'bo_table'];
+                foreach ($unset_items as $item){
+                    if ($output[$item]) unset($output[$item]);
+                }
+                $querystring = http_build_query($output);
+                $current_url = $bbs_url . '&' . $querystring;
+                echo str_replace($bbs_url, $current_url, $category_option);
+//            echo $category_option;
+            ?>
         </ul>
     </nav>
     <?php } ?>
