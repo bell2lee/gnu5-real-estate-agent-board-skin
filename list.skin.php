@@ -25,7 +25,33 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </nav>
     <?php } ?>
     <!-- } 게시판 카테고리 끝 -->
-    
+
+    <?php
+
+    if(!$board['bo_1_subj'])
+    {
+        echo '설정을 마치세요';
+    }
+    else
+    {
+        $kinds = array_map(function($category){
+            return explode('|', $category);
+        }, explode('@', $board['bo_1']));
+
+        foreach ($kinds as $kind)
+        {
+            echo '<select class="select_widget">';
+            foreach ($kind as $category)
+            {
+                echo '<option>' . $category . '</option>';
+            }
+            echo '</select>';
+        }
+    }
+    print_r($sfl);
+
+    ?>
+    http://127.0.0.1:8081/bbs/board.php?bo_table=real_estate&sca=&sop=and&sfl=wr_1&stx=%EB%A7%A4%EB%A7%A4
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -182,6 +208,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <label for="sfl" class="sound_only">검색대상</label>
             <select name="sfl" id="sfl">
                 <?php echo get_board_sfl_select_options($sfl); ?>
+                <option value="wr_1"<?php echo get_selected($sfl, 'wr_1'); ?>>거래종류</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
             <div class="sch_bar">
