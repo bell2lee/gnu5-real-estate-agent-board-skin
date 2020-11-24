@@ -28,7 +28,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     if ($is_notice || $is_html || $is_secret || $is_mail) { 
         $option = '';
         if ($is_notice) {
-            $option .= PHP_EOL.'<li class="chk_box"><input type="checkbox" id="notice" name="notice"  class="selec_chk" value="1" '.$notice_checked.'>'.PHP_EOL.'<label for="notice"><span></span>공지</label></li>';
+            $option .= PHP_EOL.'<li class="chk_box"><input type="checkbox" id="notice" name="notice"  class="selec_chk" value="1" '.$notice_checked.'>'.PHP_EOL.'<label for="notice"><span></span>MD 추천매물</label></li>';
         }
         if ($is_html) {
             if ($is_dhtml_editor) {
@@ -58,8 +58,38 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <option value="">분류를 선택하세요</option>
             <?php echo $category_option ?>
         </select>
+
+        <?php
+        if(!$board['bo_1_subj'])
+        {
+            echo '설정을 마치세요';
+        }
+        else
+        {
+            $kinds = array_map(function($category){
+                return explode('|', $category);
+            }, explode('@', $board['bo_1']));
+
+            foreach ($kinds as $kind)
+            {
+                echo '<select name="wr_1">';
+                foreach ($kind as $category)
+                {
+
+                    echo '<option ' .
+                        ($kind[0] == $category ? 'selected disabled' :
+                            ($category == $_GET['stx'] ? 'selected' : '')
+                        )
+                        . '>' . $category . '</option>';
+                }
+                echo '</select>';
+            }
+        }
+        ?>
     </div>
     <?php } ?>
+
+
 
     <div class="bo_w_info write_div">
 	    <?php if ($is_name) { ?>
@@ -112,17 +142,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
 
         <div class="extend_fields">
-            <!--카카오맵-->
-            <input type="text" required class="frm_input full_input required" name="wr_1" id="sample5_address" placeholder="주소">
+            <!--분류 옵션-->
+            <!--주소 검색 및 카카오맵-->
+            <input type="text" required class="frm_input full_input required" name="wr_2" id="sample5_address" placeholder="주소">
             <input type="button" class="btn_submit btn" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
             <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-            <input type="text" class="frm_input full_input required" required name="wr_2" placeholder="판매 정보 (권리금, 보증, 월세 혹은 매매 시 매매가 구분해서 입력)">
+            <input type="text" class="frm_input full_input required" required name="wr_3" placeholder="판매 정보 (권리금, 보증, 월세 혹은 매매 시 매매가 구분해서 입력)">
 
-            <input type="text" class="frm_input" name="wr_3" placeholder="평형 제곱미터 단위 입력">
-            <input type="text" class="frm_input" name="wr_4" placeholder="주차 가능 대수">
-            <input type="text" class="frm_input" name="wr_5" placeholder="준공년도">
-            <input type="text" class="frm_input" name="wr_6" placeholder="입주 예정일">
-            <input type="text" class="frm_input" name="wr_7" placeholder="층수 ex 4/14층">
+            <input type="text" class="frm_input" name="wr_4" placeholder="평형 제곱미터 단위 입력">
+            <input type="text" class="frm_input" name="wr_5" placeholder="주차 가능 대수">
+            <input type="text" class="frm_input" name="wr_6" placeholder="준공년도">
+            <input type="text" class="frm_input" name="wr_7" placeholder="입주 예정일">
+            <input type="text" class="frm_input" name="wr_8" placeholder="층수 ex 4/14층">
 
             <input type="hidden" id="room_options" class="frm_input" name="wr_8" placeholder="옵션">
             <div id="room_option_check_fields">
