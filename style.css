@@ -497,6 +497,14 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 
 .extend_fields input[type='text'] {margin:10px 0;}
 
+.real_estate_thumb {
+    width:200px; height:200px;
+    border:1px solid #ddd; border-radius: 5px;
+    background-color: #cdcdcd;
+    background-size:cover;
+}
+
+
 @media (max-width: 768px){
     .tbl_head01 thead th:nth-of-type(4),
     .tbl_head01 thead th:nth-of-type(5),
@@ -507,6 +515,8 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
     {
         display:none;
     }
+
+    .tbl_head01 thead th:nth-of-type(3) {width:60%;}
 
     #bo_v_con>div {width:100%;margin-bottom:15px;clear:both;}
     #bo_v_con>div>.bo_v_con_of_con>#map { height:300px;}
@@ -528,13 +538,8 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
         font-weight: bold;
     }
 
+    .real_estate_thumb {width:80px; height:80px;}
 
-}
 
-.real_estate_thumb {
-    width:200px; height:200px;
-    border:1px solid #ddd; border-radius: 5px;
-    background-color: #cdcdcd;
-    background-size:cover;
 }
 
