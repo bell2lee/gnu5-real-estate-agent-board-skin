@@ -56,7 +56,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             {
 
                 echo '<option ' .
-                    ($kind[0] == $category ? 'selected disabled' :
+                    ($kind[0] == $category ? 'selected' :
                         ($category == $_GET['stx'] ? 'selected' : '')
                     )
                     . '>' . $category . '</option>';
@@ -324,6 +324,7 @@ function select_copy(sw) {
 }
 
 function changeKind(kind){
+    kind = kind == '<?php echo $kinds[0][0] ?>' ? '' : kind
     var bbs_url = 'board.php?';
     var [url, queryString] = window.location.href.split(bbs_url);
     var params = new URLSearchParams(queryString)
