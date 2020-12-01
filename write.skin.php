@@ -78,10 +78,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 echo '<select name="wr_1">';
                 foreach ($kind as $category)
                 {
-
                     echo '<option ' .
                         ($kind[0] == $category ? 'selected disabled' :
-                            ($category == $_GET['stx'] ? 'selected' : '')
+                            ($wr_1 == $category ? 'selected' : '')
                         )
                         . '>' . $category . '</option>';
                 }
