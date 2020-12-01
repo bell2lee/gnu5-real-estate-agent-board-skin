@@ -147,18 +147,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <div class="extend_fields">
             <!--분류 옵션-->
             <!--주소 검색 및 카카오맵-->
-            <input type="text" required class="frm_input full_input required" name="wr_2" id="sample5_address" placeholder="주소">
+            <input type="text" required class="frm_input full_input required" name="wr_2" value="<?php echo $wr_2 ?>" id="sample5_address" placeholder="주소">
             <input type="button" class="btn_submit btn" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
             <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-            <input type="text" class="frm_input full_input required" required name="wr_3" placeholder="판매 정보 (권리금, 보증, 월세 혹은 매매 시 매매가 구분해서 입력)">
+            <input type="text" class="frm_input full_input required" value="<?php echo $wr_3 ?>" required name="wr_3" placeholder="판매 정보 (권리금, 보증, 월세 혹은 매매 시 매매가 구분해서 입력)">
 
-            <input type="text" class="frm_input" name="wr_4" placeholder="평형 제곱미터 단위 입력">
-            <input type="text" class="frm_input" name="wr_5" placeholder="주차 가능 대수">
-            <input type="text" class="frm_input" name="wr_6" placeholder="준공년도">
-            <input type="text" class="frm_input" name="wr_7" placeholder="입주 예정일">
-            <input type="text" class="frm_input" name="wr_8" placeholder="층수 ex 4/14층">
+            <input type="text" class="frm_input" value="<?php echo $wr_4 ?>" name="wr_4" placeholder="평형 제곱미터 단위 입력">
+            <input type="text" class="frm_input" value="<?php echo $wr_5 ?>" name="wr_5" placeholder="주차 가능 대수">
+            <input type="text" class="frm_input" value="<?php echo $wr_6 ?>" name="wr_6" placeholder="준공년도">
+            <input type="text" class="frm_input" value="<?php echo $wr_7 ?>" name="wr_7" placeholder="입주 예정일">
+            <input type="text" class="frm_input" value="<?php echo $wr_8 ?>" name="wr_8" placeholder="층수 ex 4/14층">
 
-            <input type="hidden" id="room_options" class="frm_input" name="wr_8" placeholder="옵션">
+            <input type="hidden" id="room_options" value="<?php echo $wr_9 ?>" class="frm_input" name="wr_9" placeholder="옵션">
             <div id="room_option_check_fields">
                 <?php
                 $options = [ '냉방', '에어컨', '난방', '도시가스', '스팀', 'LPG', '방송', '일반TV', '위성TV', '케이블TV', '인터넷TV',

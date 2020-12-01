@@ -314,10 +314,13 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 /* 슬라이더 및 카카오맵 */
 #bo_v_con {}
 #bo_v_con>div {width:45%; margin:2%; float:left;position:relative;}
-#bo_v_con>div>h3 {font-size:18px; margin-bottom:15px;}
+#bo_v_con>div>.bo_v_header {height:70px;}
+#bo_v_con>div>.bo_v_header>h3 {font-size:22px; margin-bottom:15px;}
 #bo_v_con>div>.bo_v_con_of_con {}
 #bo_v_con>div>.bo_v_con_of_con>#map { height:450px;}
 
+.con_box {border:1px solid #ddd;padding:20px; border-radius:10px; margin:15px 0;}
+.con_box h3 {font-size:22px; margin-bottom:20px;}
 #bo_v_con>div>.bo_v_con_of_con .slider>div {
     height:450px;
     background-repeat:no-repeat;
@@ -325,6 +328,26 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
     background-position: center center;
     background-color: #dbdbdb;
 }
+
+#default_info div {
+    font-size:16px;
+    line-height:1.8em;
+}
+
+#room_option .option {
+    font-size:16px;
+    display: inline-block;
+    padding:10px 15px;
+    border:1px solid #ddd;
+    border-radius:30px;
+    margin:15px 15px 0 0;
+    font-weight: bold;
+}
+
+#default_info>div:nth-child(even) {width:50%; float:left;}
+#default_info>div>div {display:inline-block;}
+#default_info>div>div:first-child {font-weight: bold;}
+#default_info>div>div:first-child:after {content:' : '}
 
 #bo_v_act {margin-bottom:30px;text-align:center}
 #bo_v_act .bo_v_act_gng {position:relative}

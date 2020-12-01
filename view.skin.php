@@ -106,22 +106,27 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
 
         <!-- 본문 내용 시작 { -->
+
+        <?php
+        $image_source = get_view_thumbnail($view['content']);
+        preg_match_all("/<img[^>]*src=[\'\"]?([^>\'\"]+)[\'\"]?[^>]*>/", $image_source, $img);
+        ?>
         <div id="bo_v_con">
             <div>
-                <h3>매물 위치</h3>
-                <?php
-                echo $view['wr_2'];
-                ?>
+                <div class="bo_v_header">
+                    <h3>매물 위치</h3>
+                    <?php
+                    echo $view['wr_2'];
+                    ?>
+                </div>
                 <div class="bo_v_con_of_con">
                     <div id="map"></div>
                 </div>
             </div>
             <div>
-                <h3>매물 미리보기</h3>
-                <?php
-                $image_source = get_view_thumbnail($view['content']);
-                preg_match_all("/<img[^>]*src=[\'\"]?([^>\'\"]+)[\'\"]?[^>]*>/", $image_source, $img);
-                ?>
+                <div class="bo_v_header">
+                    <h3>매물 미리보기</h3>
+                </div>
                 <div class="bo_v_con_of_con">
                     <div class="slider">
                         <?php
@@ -136,6 +141,57 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </div>
 
         </div>
+        <div>
+            <div class="con_box" id="default_info">
+                <h3>기본 정보</h3>
+                <div>
+                    <div>주소</div>
+                    <div><?php echo $view['wr_2'] ?></div>
+                </div>
+                <div>
+                    <div>금액 정보</div>
+                    <div><?php echo $view['wr_3'] ?></div>
+                </div>
+                <div>
+                    <div>평형</div>
+                    <div><?php echo $view['wr_4'] ?>m² -> <?php echo $view['wr_4'] * 0.3025 ?>평 </div>
+                </div>
+                <div>
+                    <div>주차 가능 대수</div>
+                    <div><?php echo $view['wr_5'] ?> </div>
+                </div>
+                <div>
+                    <div>준공 년도</div>
+                    <div><?php echo $view['wr_6'] ?> </div>
+                </div>
+                <div>
+                    <div>층수</div>
+                    <div><?php echo $view['wr_7'] ?> </div>
+                </div>
+            </div>
+
+            <div id="room_option" class="con_box">
+                <h3>내부 옵션</h3>
+                <?php
+                    $ro_options = explode('|', $view['wr_9']);
+                    foreach ($ro_options as $item)
+                    {
+                        echo "<div class='option'>" . $item . "</div>";
+                    }
+
+                ?>
+            </div>
+
+            <div class="con_box">
+                <h3>중개인 추가 내용</h3>
+                <?php
+                $view['wr_content'] = preg_replace("/<img[^>]*src=[\'\"]?([^>\'\"]+)[\'\"]?[^>]*>/" , "" , $view['wr_content']);
+
+                echo $view['wr_content'];
+                ?>
+            </div>
+        </div>
+
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
 
@@ -345,7 +401,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
-geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+geocoder.addressSearch('<?php echo $view['wr_2'] ?>', function(result, status) {
 
     // 정상적으로 검색이 완료됐으면
     if (status === kakao.maps.services.Status.OK) {
