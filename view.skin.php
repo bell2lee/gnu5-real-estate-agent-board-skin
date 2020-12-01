@@ -18,7 +18,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <header>
         <h2 id="bo_v_title">
             <?php if ($category_name) { ?>
-            <span class="bo_v_cate"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span> 
+            <span class="bo_v_cate"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span>
+            <span class="bo_v_cate green"><?php echo $view['wr_1']; // 분류 출력 끝 ?></span>
             <?php } ?>
             <span class="bo_v_tit">
             <?php

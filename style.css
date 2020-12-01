@@ -227,6 +227,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 
 #bo_v_title {}
 #bo_v_title .bo_v_cate {display:inline-block;line-height:20px;background:#e2eaf6;color:#3a8afd;padding:0 10px;border-radius:3px;}
+#bo_v_title .bo_v_cate.green {background: #e0ffde; color:black;}
 #bo_v_title .bo_v_tit {display:block;font-size:2em;margin:5px 0 0;word-break:break-all}
 
 #bo_v_info {margin:0;border-bottom:1px solid #f1f1f1;color:#666}
@@ -506,6 +507,28 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
     {
         display:none;
     }
+
+    #bo_v_con>div {width:100%;margin-bottom:15px;clear:both;}
+    #bo_v_con>div>.bo_v_con_of_con>#map { height:300px;}
+    #bo_v_con>div>.bo_v_con_of_con .slider>div {height:300px;}
+
+    #default_info div {
+        font-size:16px;
+        line-height:1.8em;
+    }
+    #default_info>div:nth-child(even) {width:100%; clear:both;}
+
+    #room_option .option {
+        font-size:16px;
+        display: inline-block;
+        padding:10px 15px;
+        border:1px solid #ddd;
+        border-radius:30px;
+        margin:15px 15px 0 0;
+        font-weight: bold;
+    }
+
+
 }
 
 .real_estate_thumb {
