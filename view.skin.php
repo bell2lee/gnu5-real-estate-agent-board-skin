@@ -6,8 +6,11 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
-
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
+
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=&libraries=services"></script>
 
 <!-- 게시물 읽기 시작 { -->
 
@@ -103,7 +106,36 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
+        <div id="bo_v_con">
+            <div>
+                <h3>매물 위치</h3>
+                <?php
+                echo $view['wr_2'];
+                ?>
+                <div class="bo_v_con_of_con">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div>
+                <h3>매물 미리보기</h3>
+                <?php
+                $image_source = get_view_thumbnail($view['content']);
+                preg_match_all("/<img[^>]*src=[\'\"]?([^>\'\"]+)[\'\"]?[^>]*>/", $image_source, $img);
+                ?>
+                <div class="bo_v_con_of_con">
+                    <div class="slider">
+                        <?php
+                        foreach ($img[1] as $item)
+                        { ?>
+                            <div style="background-image:url('<?php echo $item ?>');"></div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
 
@@ -271,6 +303,8 @@ $(function() {
 
     // 이미지 리사이즈
     $("#bo_v_atc").viewimageresize();
+
+    $('.slider').bxSlider();
 });
 
 function excute_good(href, $el, $tx)
@@ -297,6 +331,43 @@ function excute_good(href, $el, $tx)
         }, "json"
     );
 }
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면
+    if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;"><?php echo $view['wr_subject'] ?></div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    }
+});
 </script>
 <!-- } 게시글 읽기 끝 -->
 <?php //tuieditor_Viewer("bo_v_con"); ?>

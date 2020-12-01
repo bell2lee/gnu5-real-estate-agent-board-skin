@@ -11,7 +11,6 @@ if ($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
-
 <!-- 게시판 목록 시작 { -->
 <div id="bo_list" style="width:<?php echo $width; ?>">
 
@@ -125,7 +124,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 				</label>
             </th>
             <?php } ?>
-            <th scope="col">번호</th>
+            <th scope="col">미리보기</th>
             <th scope="col">제목</th>
             <th scope="col">글쓴이</th>
             <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 </a></th>
@@ -150,21 +149,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             	</label>
             </td>
             <?php } ?>
-            <td class="td_num2">
-            <?php
-            if ($list[$i]['is_notice']) // 공지사항
-                echo '<strong class="notice_icon">MD 추천매물</strong>';
-            else if ($wr_id == $list[$i]['wr_id'])
-                echo "<span class=\"bo_current\">열람중</span>";
-            else
-                echo $list[$i]['num'];
-             ?>
+            <td style="width:300px;">
+                <?php
+                $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], 500, 500);
+                ?>
+
+                <a href="<?php echo $list[$i]['href'] ?>">
+                    <div style="background-image:url('<?php echo $thumb['src'] ?>');" class="real_estate_thumb"></div>
+                </a>
             </td>
 
             <td class="td_subject" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
                 <?php
                 if ($is_category && $list[$i]['ca_name']) {
-				?>
+                    if ($list[$i]['is_notice']) // 공지사항
+                        echo '<strong class="notice_icon">MD 추천매물</strong>';
+                    else if ($wr_id == $list[$i]['wr_id'])
+                        echo "<span class=\"bo_current\">열람중</span>";
+                ?>
+
                     <span class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></span>
                     <span class="bo_cate_link green"><?php echo $list[$i]['wr_1'] ?></span>
                 <?php } ?>
