@@ -516,7 +516,6 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
         display:none;
     }
 
-    .tbl_head01 thead th:nth-of-type(3) {width:60%;}
 
     #bo_v_con>div {width:100%;margin-bottom:15px;clear:both;}
     #bo_v_con>div>.bo_v_con_of_con>#map { height:300px;}
