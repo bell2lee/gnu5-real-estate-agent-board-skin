@@ -319,6 +319,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     var ro = document.querySelectorAll('#room_option_check_fields input');
     var hiddenROField = document.querySelector('#room_options');
 
+    var roomOptions = '<?php echo $wr_9 ?>'.split('|');
+    console.log(roomOptions);
+    for (let i = 0; i < ro.length; i++)
+    {
+        if(roomOptions.includes(ro[i].value))
+        {
+            ro[i].checked = true;
+        }
+    }
     function add_option(){
         hiddenROField.value = '';
         for (let i = 0; i < ro.length; i++)
