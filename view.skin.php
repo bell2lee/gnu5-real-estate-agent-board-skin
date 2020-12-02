@@ -166,8 +166,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <div><?php echo $view['wr_6'] ?> </div>
                 </div>
                 <div>
-                    <div>층수</div>
+                    <div>입주 가능 일</div>
                     <div><?php echo $view['wr_7'] ?> </div>
+                </div>
+
+                <div>
+                    <div>층수</div>
+                    <div><?php echo $view['wr_8'] ?> </div>
                 </div>
             </div>
 
