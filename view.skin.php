@@ -174,6 +174,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <div>층수</div>
                     <div><?php echo $view['wr_8'] ?> </div>
                 </div>
+                <div style="clear: both;"></div>
             </div>
 
             <div id="room_option" class="con_box">
@@ -193,7 +194,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <?php
                 $view['wr_content'] = preg_replace("/<img[^>]*src=[\'\"]?([^>\'\"]+)[\'\"]?[^>]*>/" , "" , $view['wr_content']);
 
-                echo $view['wr_content'];
+                echo strip_tags($view['wr_content']);
                 ?>
             </div>
         </div>
